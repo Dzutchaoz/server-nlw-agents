@@ -1,4 +1,5 @@
 import { fastifyCors } from '@fastify/cors';
+import { create } from 'domain';
 import { fastify } from 'fastify';
 import {
   serializerCompiler,
@@ -6,6 +7,9 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
 import { env } from './env.ts';
+import { CreateQuestionRoute } from './http/routes/create-question.ts';
+import { CreateRoomRoute } from './http/routes/create-room.ts';
+import { getRoomsQuestions } from './http/routes/get-room-questions.ts';
 import { getRoomsRoute } from './http/routes/get-rooms.ts';
 
 //import { ok } from 'assert';
@@ -26,6 +30,8 @@ app.get('/health', () => {
 });
 
 app.register(getRoomsRoute);
-
+app.register(CreateRoomRoute);
+app.register(getRoomsQuestions);
+app.register(CreateQuestionRoute);
 
 app.listen({ port: env.PORT });

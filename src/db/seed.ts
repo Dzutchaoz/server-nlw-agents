@@ -1,21 +1,24 @@
-import { reset, seed } from 'drizzle-seed'
-import { schema } from './schema/index.ts'
-import { db, sql } from './connection.ts'
+import { reset, seed } from 'drizzle-seed';
+import { db, sql } from './connection.ts';
+import { schema } from './schema/index.ts';
 
-await reset( db, schema)
+await reset(db, schema);
 
-await seed( db, schema).refine((f) => {
-    return {
-        rooms: {
-            count: 30,
-            columns: {
-                name: f.companyName(),
-                description: f.streetAddress(),
-            },
-        },
-    }
-})        
+await seed(db, schema).refine((f) => {
+  return {
+    rooms: {
+      count: 30,
+      columns: {
+        name: f.companyName(),
+        description: f.streetAddress(),
+      },
+    },
+    questions: {
+      count: 90,
+    },
+  };
+});
 
-await sql.end()
+await sql.end();
 
-console.log('Database seeded')
+console.log('Database seeded');
